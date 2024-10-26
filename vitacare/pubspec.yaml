@@ -53,6 +53,7 @@ dependencies:
   google_generative_ai:
   speech_to_text:
   avatar_glow:
+  battery_plus: ^6.2.0
 
 
 dev_dependencies:

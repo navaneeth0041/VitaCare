@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:vitacare/homepage.dart';
+import 'package:vitacare/permissions.dart';
 import 'package:vitacare/providers/medication_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitacare/providers/vitaprovider.dart';
@@ -13,6 +14,7 @@ import 'package:vitacare/utils/vitavoiceassistant.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await requestPermissions();
   runApp(const ProviderScope(child: MyApp()));
 }
 
