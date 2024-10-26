@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vitacare/aichat.dart';
 import 'package:vitacare/fitness_page.dart';
 import 'package:vitacare/medication_tracker_screen.dart';
 import 'package:vitacare/reflection_page.dart';
@@ -31,6 +32,22 @@ class HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             _pages[_currentIndex],
+            Positioned(
+              bottom: 60, 
+              right: 16,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AIChatPage(), 
+                    ),
+                  );
+                },
+                backgroundColor: const Color.fromARGB(255, 212, 221, 228),
+                child: const Icon(Icons.chat_bubble), 
+              ),
+            ),
           ]
         ),       ),
       bottomNavigationBar: Padding(

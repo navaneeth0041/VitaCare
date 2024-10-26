@@ -45,6 +45,12 @@ dependencies:
   image_picker: ^1.1.2
   cloud_firestore: ^5.4.4
   firebase_storage: ^12.3.4
+  flutter_riverpod: ^2.6.1
+  flutter_tts:
+  google_generative_ai:
+  speech_to_text:
+  avatar_glow:
+
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +68,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/icons/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
