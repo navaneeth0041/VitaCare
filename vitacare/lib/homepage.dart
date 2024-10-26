@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vitacare/ProfilePage.dart';
 import 'package:vitacare/aichat.dart';
 import 'package:vitacare/fitness_page.dart';
 import 'package:vitacare/medication_tracker_screen.dart';
@@ -22,7 +23,7 @@ class HomePageState extends State<HomePage> {
     const ReflectionPage(),
     MedicationTrackerScreen(),
     const FitnessPage(),  
-    const Center(child: Text('Profile Page')),
+    const PatientProfilePage(),
   ];
 
   @override
