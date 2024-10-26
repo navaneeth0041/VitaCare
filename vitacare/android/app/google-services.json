@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419779217975",
+    "project_id": "vitacare-b9d39",
+    "storage_bucket": "vitacare-b9d39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419779217975:android:5eeb761ca04126fd6dcdb2",
+        "android_client_info": {
+          "package_name": "com.example.vitacare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkT6A4WTmPI1muoynFVZiIFnN8eXVk664"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
