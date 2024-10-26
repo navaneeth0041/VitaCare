@@ -19,7 +19,7 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "com.yourapp/sos"
     private val EMERGENCY_NUMBER = "+918089198810"  
-    private val LOW_BATTERY_THRESHOLD =  
+    private val LOW_BATTERY_THRESHOLD =  5
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
