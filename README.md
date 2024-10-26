@@ -3,7 +3,7 @@
 **VitaCare** is a comprehensive health and wellness app developed during the Evolumin Hackathon, designed to cater to the medical needs of the elderly with health monitoring tools, emergency assistance, and personalized health insights. Built using Flutter, VitaCare provides an intuitive, easy-to-navigate experience, packed with features like AI-driven insights, reminders, and emergency support to help users prioritize their health.
 
 ## Team
-- <TO BE UPDATED>
+- TO BE UPDATED
 
 ## Table of Contents
 
@@ -87,7 +87,7 @@ Ensure you have Flutter installed. For more details, refer to the [Flutter insta
    ```
 2. Navigate to the project directory:
    ```bash
-   cd VitaCare
+   cd ./VitaCare/vitacare
    ```
 3. Install dependencies:
    ```bash
@@ -102,5 +102,5 @@ Ensure you have Flutter installed. For more details, refer to the [Flutter insta
 
 ## License
 
-<TO BE UPDATED>
+- TO BE UPDATED
 
