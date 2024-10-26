@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vitacare/components/mod_emoji.dart';
+import 'package:vitacare/sos_button.dart';
 import 'components/custom_styles.dart';
 
 class ReflectionPage extends StatelessWidget {
@@ -16,22 +17,21 @@ class ReflectionPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Bar
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.menu, size: 28), 
-                  Icon(Icons.settings, size: 28), 
+                  Icon(Icons.menu, size: 28),
+                  Icon(Icons.settings, size: 28),
                 ],
               ),
               const SizedBox(height: 20),
-              
+
               Text(
                 'Daily reflection',
                 style: CustomStyles.subheadingTextStyle(screenWidth),
               ),
               const SizedBox(height: 8),
-              
+
               RichText(
                 text: TextSpan(
                   text: 'Hello, Max ',
@@ -40,20 +40,20 @@ class ReflectionPage extends StatelessWidget {
                     WidgetSpan(
                       child: Padding(
                         padding: EdgeInsets.only(left: 8.0),
-                        child: Text('🌼'), 
+                        child: Text('🌼'),
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 8),
-              
+
               Text(
                 'How do you feel about your current emotions?',
                 style: CustomStyles.questionTextStyle(screenWidth),
               ),
               const SizedBox(height: 20),
-              
+
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -119,7 +119,7 @@ class ReflectionPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '89%',  
+                              '89%',
                               style: CustomStyles.progressTextStyle(screenWidth),
                             ),
                             Text(
@@ -131,10 +131,17 @@ class ReflectionPage extends StatelessWidget {
                       ),
                     ),
                     Align(
+                      alignment: Alignment.topRight,
+                      child: SOSButton(
+                        emergencyNumber: '+916238170626',
+                        emergencyContacts: const ['+918089198810','+916238170626'],
+                      ),
+                    ),
+                    Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
-                        child: _buildBottomNavButton(Icons.home), 
+                        child: _buildBottomNavButton(Icons.home),
                       ),
                     ),
                   ],
