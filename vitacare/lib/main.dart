@@ -55,7 +55,6 @@ class MyApp extends ConsumerWidget {
 
 
 
-
 class WaveAnimation extends StatefulWidget {
   const WaveAnimation({Key? key}) : super(key: key);
 

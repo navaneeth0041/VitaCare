@@ -37,7 +37,7 @@ class SOSButton extends StatelessWidget {
     }
   }
 
-  Future<void> _handleSOS() async {
+  Future<void> handleSOS() async {
     // Request necessary permissions
     if (await Permission.sms.request().isGranted &&
         await Permission.phone.request().isGranted) {
@@ -52,7 +52,7 @@ class SOSButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => _handleSOS(),
+      onPressed: () => handleSOS(),
       child: Text('SOS'),
     );
   }

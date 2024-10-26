@@ -3,9 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:vitacare/providers/vitaprovider.dart';
 import 'package:google_generative_ai/google_generative_ai.dart'; 
-import 'package:flutter_tts/flutter_tts.dart'; 
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:vitacare/sos_button.dart'; 
 
 class SpeechService {
+    final SOSButton sosService = SOSButton(
+    emergencyNumber: "+918075911824", 
+    emergencyContacts: const ['+918089198810','+918075911824'],
+  );
+  
   late stt.SpeechToText _speechToText;
   late FlutterTts _flutterTts;
   bool _isListening = false;
@@ -54,6 +60,7 @@ void _initSpeech(Ref ref) async {
     await _speechToText.listen(
       onResult: (result) {
         if (result.recognizedWords.contains("hello") && !_isAwaitingCommand) {
+          
           print('Wake command detected!');
           ref.read(vitaDetectionProvider.notifier).state = true;
           _isAwaitingCommand = true;
@@ -88,7 +95,7 @@ void _initSpeech(Ref ref) async {
 
   void _resetSilenceTimer(Ref ref) {
     _silenceTimer?.cancel();
-    _silenceTimer = Timer(const Duration(seconds: 8), () async {
+    _silenceTimer = Timer(const Duration(seconds: 4), () async {
       print('Stopping glowing indicator after silence.');
       ref.read(vitaDetectionProvider.notifier).state = false;
       _isAwaitingCommand = false;
@@ -98,19 +105,24 @@ void _initSpeech(Ref ref) async {
   }
 
   Future<void> _callGeminiModel(String prompt, Ref ref) async {
-    final model = GenerativeModel(
-      model: 'gemini-pro',
-      apiKey: "AIzaSyCntOUJ55NKZ-_yx-DGAS9Z2MD6Dfgrac8",
-    );
-    final response = await model.generateContent([Content.text(prompt)]);
+  final model = GenerativeModel(
+    model: 'gemini-pro',
+    apiKey: "AIzaSyCntOUJ55NKZ-_yx-DGAS9Z2MD6Dfgrac8",
+  );
+  final response = await model.generateContent([Content.text(prompt)]);
 
-    String responseText = response.text!
-        .replaceAll("Google", "Tech-Codianzz")
-        .replaceAll("Gemini", "Vita");
+  String responseText = response.text!
+      .replaceAll("Google", "Tech-Codianzz")
+      .replaceAll("Gemini", "Vita");
 
-    print('Response: $responseText');
+  print('Response: $responseText');
+  if (responseText.toLowerCase().contains(RegExp(r"\bemergency\b|\bcall\b|\bsms\b|\bhelp\b"))) {
+    await sosService.handleSOS(); 
+  } else {
     await _flutterTts.speak(responseText); 
   }
+}
+
 
   void _stopListening(Ref ref, {bool restart = true}) async {
     if (_isListening) {
