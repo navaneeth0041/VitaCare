@@ -20,7 +20,7 @@ class Checkcontainer extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16.0),
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        margin: const EdgeInsets.symmetric(vertical: 8.0, ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
