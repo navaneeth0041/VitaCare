@@ -237,23 +237,24 @@ Map<String, dynamic> parseResponse(String responseText) {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final currentQuestion = questions[currentQuestionIndex];
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
+@override
+Widget build(BuildContext context) {
+  final currentQuestion = questions[currentQuestionIndex];
+  final screenWidth = MediaQuery.of(context).size.width;
+  
+  return Scaffold(
+    backgroundColor: Colors.white,
+    appBar: AppBar(
       backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => Navigator.of(context).pop(),
       ),
-      body: SafeArea(
+    ),
+    body: SafeArea(
+      child: SingleChildScrollView( // Wrap with SingleChildScrollView
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth*0.08),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -266,7 +267,6 @@ Map<String, dynamic> parseResponse(String responseText) {
                   fontFamily: 'Roboto',
                 ),
                 textAlign: TextAlign.center,
-
               ),
               SizedBox(height: screenWidth * 0.06),
               Text(
@@ -282,65 +282,64 @@ Map<String, dynamic> parseResponse(String responseText) {
               ],
               const SizedBox(height: 20),
               _buildQuestionWidget(currentQuestion),
-              const Spacer(),
-    Padding(
-  padding: const EdgeInsets.only(bottom: 40),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 8.0), // Add padding between buttons
-          child: ElevatedButton(
-            onPressed: _previousQuestion,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue, // Set button color
-              padding: const EdgeInsets.symmetric(vertical: 16.0), // Increase vertical padding
-              textStyle: const TextStyle(
-                fontSize: 18, // Increase text size
-                color: Colors.white, // Set text color to white
+              const SizedBox(height: 20), // Add some spacing before buttons
+              Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: ElevatedButton(
+                          onPressed: _previousQuestion,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: const Text('Previous', style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '${currentQuestionIndex + 1}/${questions.length}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: ElevatedButton(
+                          onPressed: _nextQuestion,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: const Text('Next', style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            child: const Text('Previous',style: TextStyle(color: Colors.white),),
-          ),
-        ),
-      ),
-      Text(
-        '${currentQuestionIndex + 1}/${questions.length}',
-        style: const TextStyle(
-          fontSize: 20, // Increase text size for better readability
-          fontWeight: FontWeight.bold, // Make text bold
-          color: Colors.black, // Set text color
-        ),
-      ),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0), // Add padding between buttons
-          child: ElevatedButton(
-            onPressed: _nextQuestion,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue, // Set button color
-              padding: const EdgeInsets.symmetric(vertical: 16.0), // Increase vertical padding
-              textStyle: const TextStyle(
-                fontSize: 18, // Increase text size
-                color: Colors.white, // Set text color to white
-              ),
-            ),
-            child: const Text('Next',style: TextStyle(color: Colors.white),),
-          ),
-        ),
-
-      ),
-    ],
-  ),
-),
-
             ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildQuestionWidget(Question question) {
     switch (question.type) {
