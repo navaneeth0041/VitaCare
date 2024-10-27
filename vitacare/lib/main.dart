@@ -62,7 +62,7 @@ class MyApp extends ConsumerWidget {
               // Add SOSButton here
               Positioned(
                 top: 30, // Adjust this value as needed
-                right: 60,   // Position it in the left corner
+                right: 20,   // Position it in the left corner
                 child: SOSButton(
                   emergencyNumber: '+916238170626',
                   emergencyContacts: const ['+918089198810', '+916238170626'],
