@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:vitacare/ProfilePage.dart';
 import 'package:vitacare/aichat.dart';
-import 'package:vitacare/components/meal_card.dart';
 import 'package:vitacare/components/stat_card.dart';
 import 'package:vitacare/fitness_page.dart';
 import 'package:vitacare/medication_tracker_screen.dart';
 import 'package:vitacare/reflection_page.dart';
-import 'components/custom_styles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -117,6 +115,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
@@ -141,7 +140,7 @@ class HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
+        padding: const EdgeInsets.only(bottom: 10,top: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -225,6 +224,76 @@ class HomePageContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Medical Record Graphs Section
+                Text(
+                  'Medical Record Graphs',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0057A4),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  height: screenWidth/2,
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFDBF3FD),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Blood Pressure',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0057A4),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '120/80 mmHg',
+                              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Sugar Level',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0057A4),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '90 mg/dL',
+                              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
                 // Today’s Events Section
                 Text(
                   'Today\'s Events',
@@ -242,8 +311,8 @@ class HomePageContent extends StatelessWidget {
                       children: List.generate(events.length, (index) {
                         final event = events[index];
                         return Card(
-                          color: const Color.fromARGB(255, 255, 255, 255), // Background color for event card
-                          margin: const EdgeInsets.only(right: 10),
+                          color: Colors.white,
+                          elevation: 4,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -251,17 +320,6 @@ class HomePageContent extends StatelessWidget {
                             width: 180,
                             height: 170,
                             padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 8,
-                                  offset: Offset(0, 4),
-                                ),
-                              ],
-                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

@@ -13,6 +13,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Patient Profile'),
         centerTitle: true,
@@ -25,6 +26,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         ),
       ),
       body: Column(
+
         children: [
           _buildProfileHeader(),
           _buildTabs(),
