@@ -13,7 +13,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F5FF), // Light bluish background
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Patient Profile', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
         centerTitle: true,
@@ -49,7 +49,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         ),
         const SizedBox(height: 12),
         const Text(
-          'Akanksha Deo',
+          'Arun Kumar',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF223365)),
         ),
         const SizedBox(height: 8),
@@ -57,8 +57,8 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildInfoBadge('60 Years'),
-            _buildInfoBadge('Female'),
-            _buildInfoBadge('AB+'),
+            _buildInfoBadge('Male'),
+            _buildInfoBadge('B+'),
           ],
         ),
         const SizedBox(height: 12),
@@ -129,12 +129,12 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
           _buildSectionTitle('Personal Information'),
           _buildInfoRow('Address', 'Bangalore'),
           _buildInfoRow('Blood Group', 'B+'),
-          _buildInfoRow('Phone no.', '9999999999'),
+          _buildInfoRow('Phone no.', '9446449855'),
           const Divider(height: 30, thickness: 1.5),
           _buildSectionTitle('Emergency Contact Details'),
           _buildInfoRow('Contact Name', 'Astha'),
           _buildInfoRow('Relationship', 'Daughter'),
-          _buildInfoRow('Contact Number', '9999999999'),
+          _buildInfoRow('Contact Number', '62388440032'),
           const Divider(height: 30, thickness: 1.5),
           _buildSectionTitle('Passed Appointments'),
           ListTile(
@@ -164,7 +164,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         children: [
           _buildSectionTitle('Doctor Prescriptions'),
           _buildReportItem('Dr. Inara Isani Prescription', 'Sunday, 2nd March 2024'),
-          _buildReportItem('Dr. Inara Isani Prescription', 'Sunday, 2nd March 2024'),
+          _buildReportItem('Dr. Mishra Kumar Prescription', 'Sunday, 7th March 2024'),
           const Align(
             alignment: Alignment.centerRight,
             child: Text(

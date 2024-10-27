@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:vitacare/add_medication_screen.dart';
 import 'package:vitacare/models/medication_model.dart';
 import 'package:vitacare/providers/medication_provider.dart';
 import 'package:vitacare/views/Medication/Add_Medication1.dart';
@@ -92,10 +90,47 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text('Medication Tracker'),
-        actions: [
+      ),
+      body: Column(
+        children: [
+Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 20),
+  child: Card(
+    color: Colors.blueAccent,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    elevation: 4,
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Today’s Date",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
           IconButton(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Icons.calendar_today, color: Colors.white),
             onPressed: () async {
               DateTime? picked = await showDatePicker(
                 context: context,
@@ -108,42 +143,10 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20.0),
-            child: Card(
-              color: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Today’s Date",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+    ),
+  ),
+),
+
           Container(
             height: 70,
             padding: const EdgeInsets.symmetric(vertical: 10),
