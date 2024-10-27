@@ -53,6 +53,11 @@ dependencies:
   google_generative_ai:
   speech_to_text:
   avatar_glow:
+  battery_plus: ^6.2.0
+  random_string: ^2.3.1
+  uuid: ^4.5.1
+  sensors_plus: ^6.1.0
+  google_fonts: ^6.2.1
 
 
 dev_dependencies:
@@ -73,6 +78,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/icons/
+    - assets/images/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

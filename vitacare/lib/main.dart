@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart' as provider;
+import 'package:vitacare/fall_listner.dart';
 import 'package:vitacare/homepage.dart';
+import 'package:vitacare/permissions.dart';
 import 'package:vitacare/providers/medication_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitacare/providers/vitaprovider.dart';
@@ -23,6 +25,8 @@ void main() async {
       InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
+  await requestPermissions();
+  listenForFallEvents();
   runApp(const ProviderScope(child: MyApp()));
 }
 
