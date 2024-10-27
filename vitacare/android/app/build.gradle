@@ -45,3 +45,12 @@ android {
 flutter {
     source = "../.."
 }
+
+
+dependencies {
+    // Other dependencies
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.0' // Check for the latest version
+}
+
+
+apply plugin: 'com.google.gms.google-services'

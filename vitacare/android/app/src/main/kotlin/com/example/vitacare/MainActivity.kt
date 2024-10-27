@@ -17,16 +17,20 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.yourapp/sos"
+    private val CHANNEL = "com.yourapp/sos" // Ensure this matches the Dart code
     private val EMERGENCY_NUMBER = "+918089198810"  
-    private val LOW_BATTERY_THRESHOLD =  5
+    private val LOW_BATTERY_THRESHOLD = 5
+    private val REQUEST_CODE_PERMISSIONS = 1001
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        // Register MethodChannel for Flutter interaction
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
+                "fallSOS" -> {
+                    triggerFallSOS()
+                    result.success("Fall SOS triggered")
+                }
                 "sendSMS" -> {
                     val number = call.argument<String>("number")
                     val message = call.argument<String>("message")
@@ -50,11 +54,27 @@ class MainActivity : FlutterActivity() {
             }
         }
 
-        // Register the battery level BroadcastReceiver
+        requestPermissions()
+
         registerReceiver(batteryLevelReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
     }
 
-    // BroadcastReceiver for battery level
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE),
+            REQUEST_CODE_PERMISSIONS
+        )
+    }
+
+    private fun triggerFallSOS() {
+        val message = "Fall detected! Please check on me immediately."
+
+        Log.d("FallDetection", "Triggering fall SOS")
+        sendSMS(EMERGENCY_NUMBER, message)
+        makeCall(EMERGENCY_NUMBER)
+    }
+
     private val batteryLevelReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
@@ -68,7 +88,6 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    // Method to send an SMS
     private fun sendSMS(number: String, message: String) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             try {
@@ -83,7 +102,6 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    // Method to make a call
     private fun makeCall(number: String) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             try {
@@ -99,19 +117,16 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    // Trigger SOS for low battery
     private fun triggerLowBatterySOS() {
         val message = "Battery critically low! Please check on me."
 
         Log.d("BatteryMonitor", "Triggering low battery SOS")
-
         sendSMS(EMERGENCY_NUMBER, message)
         makeCall(EMERGENCY_NUMBER)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Unregister the battery level receiver
         unregisterReceiver(batteryLevelReceiver)
     }
 }
