@@ -41,7 +41,7 @@ class HomePageState extends State<HomePage> {
     ),
     const ReflectionPage(),
     MedicationTrackerScreen(),
-    const FitnessPage(),
+    const DoctorAppointmentPage(),
     const PatientProfilePage(),
   ];
 
