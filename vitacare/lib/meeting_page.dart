@@ -143,14 +143,14 @@ class _MeetingPageState extends State<MeetingPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigoAccent,
+                    backgroundColor : Colors.blue,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                   ),
-                  child: Text("Join Meeting"),
+                  child: Text("Join Meeting",style: TextStyle(color: Colors.white),),
                 ),
                 IconButton(
-                  icon: Icon(Icons.chat, color: Colors.indigoAccent, size: 28),
+                  icon: Icon(Icons.chat, color: Colors.blue, size: 28),
                   onPressed: () {
                     _showChatDialog(doc);
                   },
@@ -200,35 +200,43 @@ class _MeetingPageState extends State<MeetingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Meeting Hub", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.indigo,
-        elevation: 2,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add_circle, color: Colors.white, size: 28),
-            onPressed: () => _showCreateMeetingDialog(),
+        title: Text("Meeting Hub", style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: Stack(
+        children: [
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('events')
+                .orderBy('createdAt', descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+              final documents = snapshot.data!.docs;
+              return ListView.builder(
+                itemCount: documents.length,
+                itemBuilder: (context, index) {
+                  return _buildMeetingCard(documents[index]);
+                },
+              );
+            },
+          ),
+          Positioned(
+            bottom: 60,
+            left: 16,
+            child: FloatingActionButton(
+              onPressed: _showCreateMeetingDialog,
+              child: Icon(Icons.add_circle, color: Colors.black, size: 28),
+              backgroundColor: const Color.fromARGB(255, 212, 221, 228),
+              elevation: 0,
+            ),
           ),
         ],
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('events')
-            .orderBy('createdAt', descending: true)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
-          final documents = snapshot.data!.docs;
-          return ListView.builder(
-            itemCount: documents.length,
-            itemBuilder: (context, index) {
-              return _buildMeetingCard(documents[index]);
-            },
-          );
-        },
       ),
     );
   }

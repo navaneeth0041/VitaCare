@@ -3,7 +3,6 @@ import 'package:vitacare/components/appointment_card.dart';
 import 'package:vitacare/components/doctor_card.dart';
 import 'package:vitacare/components/doctor_details_page.dart';
 import 'package:vitacare/components/hospital_card.dart';
-import 'package:vitacare/components/topbar.dart';
 import 'package:vitacare/components/hospital_details_page.dart';
 
 class DoctorAppointmentPage extends StatefulWidget {
@@ -31,8 +30,7 @@ class _DoctorAppointmentPageState extends State<DoctorAppointmentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TopBar(),
-            SizedBox(height: screenHeight * 0.03), // 3% of screen height
+            SizedBox(height: screenHeight * 0.05), // 3% of screen height
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
