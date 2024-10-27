@@ -20,7 +20,7 @@ class HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    HomePageContent(
+    const HomePageContent(
       events: [
         {
           'title': 'Doctor\'s Appointment',
@@ -204,7 +204,7 @@ class HomePageContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Hello User',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -226,7 +226,7 @@ class HomePageContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Medical Record Graphs Section
-                Text(
+                const Text(
                   'Medical Record Graphs',
                   style: TextStyle(
                     fontSize: 18,
@@ -239,7 +239,7 @@ class HomePageContent extends StatelessWidget {
                   height: screenWidth/2,
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Color(0xFFDBF3FD),
+                    color: const Color(0xFFDBF3FD),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: const [
                       BoxShadow(
@@ -255,7 +255,7 @@ class HomePageContent extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Blood Pressure',
                               style: TextStyle(
                                 fontSize: 16,
@@ -275,7 +275,7 @@ class HomePageContent extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Sugar Level',
                               style: TextStyle(
                                 fontSize: 16,
@@ -296,7 +296,7 @@ class HomePageContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // Today’s Events Section
-                Text(
+                const Text(
                   'Today\'s Events',
                   style: TextStyle(
                     fontSize: 18,
@@ -353,7 +353,7 @@ class HomePageContent extends StatelessWidget {
 
                 const SizedBox(height: 20),
                 // Medicine Reminder Section
-                Text(
+                const Text(
                   'Medicine Reminder',
                   style: TextStyle(
                     fontSize: 18,
@@ -366,7 +366,7 @@ class HomePageContent extends StatelessWidget {
                   height: screenWidth/3.5,
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Color(0xFFDBF3FD),
+                    color: const Color(0xFFDBF3FD),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: const [
                       BoxShadow(
@@ -387,7 +387,7 @@ class HomePageContent extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Medicine Name',
                             style: TextStyle(
                               fontSize: 16,
@@ -412,7 +412,7 @@ class HomePageContent extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // Health Stats Section
-                Text(
+                const Text(
                   'Patient Health Stats',
                   style: TextStyle(
                     fontSize: 18,
