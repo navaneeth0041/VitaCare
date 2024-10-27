@@ -49,11 +49,26 @@ class SOSButton extends StatelessWidget {
     }
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return ElevatedButton.icon(
       onPressed: () => handleSOS(),
-      child: Text('SOS'),
+      icon: const Icon(
+        Icons.add_alert, // You can choose any suitable icon
+        color: Colors.white,
+      ),
+      label: const Text(
+        'SOS',
+        style: TextStyle(color: Colors.white),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.red, // Background color
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Button padding
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), // Rounded corners
+        ),
+        elevation: 6, // Shadow effect
+      ),
     );
   }
 }

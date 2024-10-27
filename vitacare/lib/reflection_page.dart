@@ -15,188 +15,125 @@ class ReflectionPage extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(Icons.menu, size: 28),
-                  Icon(Icons.settings, size: 28),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              Text(
-                'Daily reflection',
-                style: CustomStyles.subheadingTextStyle(screenWidth),
-              ),
-              const SizedBox(height: 8),
-
-              RichText(
-                text: TextSpan(
-                  text: 'Hello, Max ',
-                  style: CustomStyles.headingTextStyle(screenWidth),
-                  children: const [
-                    WidgetSpan(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text('🌼'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-
-              Text(
-                'How do you feel about your current emotions?',
-                style: CustomStyles.questionTextStyle(screenWidth),
-              ),
-              const SizedBox(height: 20),
-
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
+        child: Container(
+          decoration: BoxDecoration(
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header icons with a pulsing animation on tap
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Your reflection..',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.04,
-                        color: Colors.grey.shade600,
-                      ),
+                    IconButton(
+                      icon: const Icon(Icons.menu, size: 28),
+                      onPressed: () {},
                     ),
-                    const Icon(Icons.arrow_forward, size: 24),
+                    IconButton(
+                      icon: const Icon(Icons.settings, size: 28),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 30),
+                const SizedBox(height: 20),
 
-              // Health Check Section
-              Text(
-                'Health Checks',
-                style: TextStyle(
-                  fontSize: screenWidth * 0.06, 
-                  fontWeight: FontWeight.bold,  
-                  color: Colors.blueAccent,       
-                  letterSpacing: 1.2,             
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 3),
-              Text(
-                'How Healthy is your lifestyle? Complete the checks below to find out!',
-                style: TextStyle(
-                  fontSize: screenWidth * 0.04, 
-                  fontWeight: FontWeight.bold,  
-                  color: const Color.fromRGBO(64, 66, 68, 1),       
-                ),
-                overflow: TextOverflow.visible,
-              ),
-              const SizedBox(height: 20),
-
-              Checkcontainer(
-                title: "General Health Check",
-                subtitle: "How Healthy are you",
-                imageUrl: "https://www.ethika.co.in/wp-content/uploads/2022/06/annual-health-checkup-1200x900.jpg",
-                onTap: () {
-                  HealthCheck healthCheck = HealthCheck(
-                    title: "General Health Check",
-                    subtitle: "How Healthy are you",
-                    imageUrl: "https://www.ethika.co.in/wp-content/uploads/2022/06/annual-health-checkup-1200x900.jpg",
-                  );
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GeneralHealthCheck(healthCheck: healthCheck),
-                    ),
-                  );
-                },
-              ),
-
-              const SizedBox(height: 30),
-
-              Text(
-                'Daily Mood Log',
-                style: CustomStyles.subheadingTextStyle(screenWidth),
-              ),
-              const SizedBox(height: 16),
-
-              const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    MoodEmoji(icon: '😊'),
-                    MoodEmoji(icon: '😟'),
-                    MoodEmoji(icon: '😡'),
-                    MoodEmoji(icon: '😐'),
-                    MoodEmoji(icon: '😞'),
-                    MoodEmoji(icon: '😄'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              Text(
-                'Your progress',
-                style: CustomStyles.subheadingTextStyle(screenWidth),
-              ),
-              const SizedBox(height: 10),
-
-              Expanded(
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '89%',
-                              style: CustomStyles.progressTextStyle(screenWidth),
-                            ),
-                            Text(
-                              'Of the weekly plan completed',
-                              style: CustomStyles.subtextStyle(screenWidth),
-                            ),
-                          ],
+                // Animated Hero Banner
+                RichText(
+                  text: TextSpan(
+                    text: 'Hello, Max ',
+                    style: CustomStyles.headingTextStyle(screenWidth),
+                    children: const [
+                      WidgetSpan(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Icon(Icons.safety_check, color: Colors.yellow, size: 24),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: SOSButton(
-                        emergencyNumber: '+916238170626',
-                        emergencyContacts: const ['+918089198810','+916238170626'],
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: _buildBottomNavButton(Icons.home),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+
+                // Health Check Section
+                Text(
+                  'Health Checks',
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.06,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Checkcontainer(
+                  title: "General Health Check",
+                  subtitle: "How Healthy are you",
+                  imageUrl: "https://www.ethika.co.in/wp-content/uploads/2022/06/annual-health-checkup-1200x900.jpg",
+                  onTap: () {
+                    HealthCheck healthCheck = HealthCheck(
+                      title: "General Health Check",
+                      subtitle: "How Healthy are you",
+                      imageUrl: "https://www.ethika.co.in/wp-content/uploads/2022/06/annual-health-checkup-1200x900.jpg",
+                    );
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GeneralHealthCheck(healthCheck: healthCheck),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 30),
+
+                // Animated Progress Indicator
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TweenAnimationBuilder(
+                                tween: Tween<double>(begin: 0, end: 89),
+                                duration: const Duration(seconds: 2),
+                                builder: (context, value, child) {
+                                  return Text(
+                                    '${value.toStringAsFixed(0)}%',
+                                    style: CustomStyles.progressTextStyle(screenWidth),
+                                  );
+                                },
+                              ),
+                              Text(
+                                'Of the weekly plan completed',
+                                style: CustomStyles.subtextStyle(screenWidth),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: SOSButton(
+                          emergencyNumber: '+916238170626',
+                          emergencyContacts: const ['+918089198810','+916238170626'],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -204,23 +141,30 @@ class ReflectionPage extends StatelessWidget {
   }
 
   Widget _buildBottomNavButton(IconData icon) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 4,
-            blurRadius: 8,
+    return GestureDetector(
+      onTap: () {
+        // Add navigation or action on tap
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade600, Colors.blueAccent],
           ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 28,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.blue.withOpacity(0.2),
+              spreadRadius: 4,
+              blurRadius: 8,
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Icon(
+          icon,
+          color: Colors.white,
+          size: 28,
+        ),
       ),
     );
   }
