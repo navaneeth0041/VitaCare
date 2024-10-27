@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DoctorDetailsPage extends StatefulWidget {
   final String name;
@@ -24,9 +25,9 @@ class DoctorDetailsPage extends StatefulWidget {
 
 class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   final Map<String, List<String>> _availableSlots = {
-    'Monday': ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM'],
-    'Tuesday': ['11:00 AM - 12:00 PM', '12:00 PM - 01:00 PM'],
-    'Wednesday': ['12:00 PM - 01:00 PM', '01:00 PM - 02:00 PM'],
+    '2023-10-09': ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM'], // Monday
+    '2023-10-10': ['11:00 AM - 12:00 PM', '12:00 PM - 01:00 PM'], // Tuesday
+    '2023-10-11': ['12:00 PM - 01:00 PM', '01:00 PM - 02:00 PM'], // Wednesday
   };
 
   String? _selectedDay;
@@ -62,6 +63,9 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final List<String> days = _availableSlots.keys.toList();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -209,30 +213,36 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8.0,
-                          children: _availableSlots.keys.map((day) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedDay = day;
-                                });
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: _selectedDay == day ? Colors.blue[700] : Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  day,
-                                  style: TextStyle(
-                                    color: _selectedDay == day ? Colors.white : Colors.black,
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: days.map((day) {
+                              final DateTime date = DateTime.parse(day);
+                              final String formattedDate = DateFormat('EEEE, MMM d').format(date);
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedDay = day;
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 8.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: _selectedDay == day ? Colors.blue[700] : const Color.fromARGB(255, 255, 255, 255),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Colors.black),
+                                  ),
+                                  child: Text(
+                                    formattedDate,
+                                    style: TextStyle(
+                                      color: _selectedDay == day ? Colors.white : Colors.black,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
+                              );
+                            }).toList(),
+                          ),
                         ),
                         const SizedBox(height: 16),
                         if (_selectedDay != null) ...[
