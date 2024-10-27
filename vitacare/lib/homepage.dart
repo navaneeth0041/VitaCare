@@ -5,6 +5,7 @@ import 'package:vitacare/ProfilePage.dart';
 import 'package:vitacare/aichat.dart';
 import 'package:vitacare/components/stat_card.dart';
 import 'package:vitacare/fitness_page.dart';
+import 'package:vitacare/meeting_page.dart';
 import 'package:vitacare/views/Medication/medication_tracker_screen.dart';
 import 'package:vitacare/reflection_page.dart';
 
@@ -39,7 +40,7 @@ class HomePageState extends State<HomePage> {
       ],
       remainingSeconds: 120,
     ),
-    const ReflectionPage(),
+    MeetingPage(),
     MedicationTrackerScreen(),
     const DoctorAppointmentPage(),
     const PatientProfilePage(),

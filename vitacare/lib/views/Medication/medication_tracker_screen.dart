@@ -9,58 +9,64 @@ import 'package:vitacare/views/Medication/Add_Medication1.dart';
 
 class MedicationTrackerScreen extends StatefulWidget {
   @override
-  _MedicationTrackerScreenState createState() =>
-      _MedicationTrackerScreenState();
+  _MedicationTrackerScreenState createState() => _MedicationTrackerScreenState();
 }
 
 class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
   DateTime selectedDate = DateTime.now();
   late List<DateTime> datesInMonth;
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin; // Declare here
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   List<Medication> medications = [];
+  bool isLoading = true; // Loading state
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     datesInMonth = _generateDatesInMonth(selectedDate);
-    // Initialize local notifications
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     _initializeNotifications();
-    // Fetch medications for the initial date
     _fetchMedications(selectedDate);
   }
 
- void _initializeNotifications() async {
-    const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher'); // Use default launcher icon
+  void _initializeNotifications() async {
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
     );
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-}
+  }
 
+  void _fetchMedications(DateTime date) async {
+    setState(() {
+      isLoading = true; 
+    });
 
-  void _fetchMedications(DateTime date) {
-    Provider.of<MedicationProvider>(context, listen: false)
-        .fetchMedications(date);
-    medications = Provider.of<MedicationProvider>(context, listen: false).medications; // Fetch medications for the selected date
-    _scheduleDailyNotifications(); // Schedule notifications whenever medications are fetched
+    await Provider.of<MedicationProvider>(context, listen: false).fetchMedications(date);
+    medications = Provider.of<MedicationProvider>(context, listen: false).medications;
+
+    setState(() {
+      isLoading = false; 
+    });
+
+    _scrollToToday();
+  }
+
+  void _scrollToToday() {
+    int todayIndex = datesInMonth.indexWhere((date) =>
+        date.day == selectedDate.day &&
+        date.month == selectedDate.month &&
+        date.year == selectedDate.year);
+
+    if (todayIndex != -1) {
+      _scrollController.jumpTo(todayIndex * 64.0); 
+    }
   }
 
   List<Medication> getDailyMedications() {
     return medications.where((med) => med.frequency == 'daily').toList();
-  }
-
-  void _scheduleDailyNotifications() {
-    final dailyMedications = getDailyMedications();
-
-    for (var medication in dailyMedications) {
-      for (var time in medication.reminders) {
-        scheduleNotification(medication.name, time);
-      }
-    }
   }
 
   List<DateTime> _generateDatesInMonth(DateTime date) {
@@ -75,46 +81,8 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
     setState(() {
       selectedDate = date;
       datesInMonth = _generateDatesInMonth(date);
-      _fetchMedications(selectedDate); // Fetch medications when a new date is selected
+      _fetchMedications(selectedDate); 
     });
-  }
-
-  tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
-
-  void scheduleNotification(String medicineName, String time) async {
-    final timeParts = time.split(":");
-    final hour = int.parse(timeParts[0]);
-    final minute = int.parse(timeParts[1]);
-
-    // Use a unique notification ID based on the medicine name and time
-    int notificationId = medicineName.hashCode + hour * 100 + minute;
-
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      notificationId,
-      'Medication Reminder',
-      'It\'s time to take $medicineName',
-      _nextInstanceOfTime(hour, minute),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'medication_channel_id',
-          'Medication Reminders',
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-      ),
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
   }
 
   @override
@@ -122,6 +90,7 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
     final medicationProvider = Provider.of<MedicationProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Medication Tracker'),
         actions: [
@@ -142,7 +111,7 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal:20.0),
             child: Card(
               color: Colors.blueAccent,
               shape: RoundedRectangleBorder(
@@ -180,6 +149,7 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              controller: _scrollController,
               itemCount: datesInMonth.length,
               itemBuilder: (context, index) {
                 DateTime date = datesInMonth[index];
@@ -218,62 +188,61 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
             ),
           ),
           Expanded(
-            child: medicationProvider.medications.isEmpty
-                ? Center(child: Text("No logs for this date."))
-                : ListView.builder(
-                    itemCount: medicationProvider.medications.length,
-                    itemBuilder: (ctx, index) {
-                      final med = medicationProvider.medications[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 6,
-                          horizontal: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 3,
-                        color: Colors.blue[50],
-                        child: ListTile(
-                          title: Text(
-                            med.name,
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.bold,
+            child: isLoading
+                ? Center(child: CircularProgressIndicator()) // Show loading indicator
+                : medicationProvider.medications.isEmpty
+                    ? Center(child: Text("No logs for this date."))
+                    : ListView.builder(
+                        itemCount: medicationProvider.medications.length,
+                        itemBuilder: (ctx, index) {
+                          final med = medicationProvider.medications[index];
+                          return Card(
+                            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Frequency: ${med.frequency}"),
-                              Text("Type: ${med.type}"),
-                              Text(
-                                " ${med.reminders.join(', ')}",
+                            elevation: 3,
+                            color: Colors.blue[50],
+                            child: ListTile(
+                              title: Text(
+                                med.name,
                                 style: TextStyle(
                                   color: Colors.blueAccent,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
-                          leading: med.imageUrl.isNotEmpty
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.network(med.imageUrl, width: 50),
-                                )
-                              : Icon(
-                                  Icons.medication,
-                                  color: Colors.blueAccent,
-                                  size: 40,
-                                ),
-                          onTap: () {
-                            // Navigate to detail/edit screen if needed
-                          },
-                        ),
-                      );
-                    },
-                  ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Frequency: ${med.frequency}"),
+                                  Text("Type: ${med.type}"),
+                                  Text(
+                                    " ${med.reminders.join(', ')}",
+                                    style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              leading: med.imageUrl.isNotEmpty
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(med.imageUrl, width: 50),
+                                    )
+                                  : Icon(
+                                      Icons.medication,
+                                      color: Colors.blueAccent,
+                                      size: 40,
+                                    ),
+                              onTap: () {
+                                // Navigate to detail/edit screen if needed
+                              },
+                            ),
+                          );
+                        },
+                      ),
           ),
         ],
       ),
@@ -285,6 +254,7 @@ class _MedicationTrackerScreenState extends State<MedicationTrackerScreen> {
         },
         child: Icon(Icons.add),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

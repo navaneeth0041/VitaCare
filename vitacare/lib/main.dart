@@ -10,6 +10,7 @@ import 'package:vitacare/permissions.dart';
 import 'package:vitacare/providers/medication_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitacare/providers/vitaprovider.dart';
+import 'package:vitacare/sos_button.dart';
 import 'package:vitacare/utils/vitavoiceassistant.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -29,7 +30,6 @@ void main() async {
   listenForFallEvents();
   runApp(const ProviderScope(child: MyApp()));
 }
-
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
@@ -59,6 +59,15 @@ class MyApp extends ConsumerWidget {
                   right: 0,
                   child: WaveAnimation(),
                 ),
+              // Add SOSButton here
+              Positioned(
+                bottom: 120, // Adjust this value as needed
+                left: 20,   // Position it in the left corner
+                child: SOSButton(
+                  emergencyNumber: '+916238170626',
+                  emergencyContacts: const ['+918089198810', '+916238170626'],
+                ),
+              ),
             ],
           ),
         ),
