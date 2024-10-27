@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:vitacare/add_medication_screen.dart';
 import 'package:vitacare/models/medication_model.dart';
 import 'package:vitacare/providers/medication_provider.dart';
 import 'package:vitacare/views/Medication/Add_Medication1.dart';
