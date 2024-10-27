@@ -117,7 +117,8 @@ void _initSpeech(Ref ref) async {
 
   print('Response: $responseText');
   if (responseText.toLowerCase().contains(RegExp(r"\bemergency\b|\bcall\b|\bsms\b|\bhelp\b"))) {
-    await sosService.handleSOS(); 
+    await sosService.handleSOS();
+    _startListening(ref); 
   } else {
     await _flutterTts.speak(responseText); 
   }

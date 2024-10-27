@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vitacare/components/mod_emoji.dart';
+import 'package:vitacare/healthcheck.dart';
+import 'package:vitacare/models/healthcheckmodels.dart';
 import 'package:vitacare/sos_button.dart';
+import 'package:vitacare/views/HealthCHecks/GeneralHealthCheck.dart';
+import 'package:vitacare/widgets/checkcontainer.dart';
 import 'components/custom_styles.dart';
 
 class ReflectionPage extends StatelessWidget {
@@ -74,6 +78,51 @@ class ReflectionPage extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 30),
+
+              // Health Check Section
+              Text(
+                'Health Checks',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.06, 
+                  fontWeight: FontWeight.bold,  
+                  color: Colors.blueAccent,       
+                  letterSpacing: 1.2,             
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 3),
+              Text(
+                'How Healthy is your lifestyle? Complete the checks below to find out!',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.04, 
+                  fontWeight: FontWeight.bold,  
+                  color: const Color.fromRGBO(64, 66, 68, 1),       
+                ),
+                overflow: TextOverflow.visible,
+              ),
+              const SizedBox(height: 20),
+
+              Checkcontainer(
+                title: "General Health Check",
+                subtitle: "How Healthy are you",
+                imageUrl: "https://www.ethika.co.in/wp-content/uploads/2022/06/annual-health-checkup-1200x900.jpg",
+                onTap: () {
+                  HealthCheck healthCheck = HealthCheck(
+                    title: "General Health Check",
+                    subtitle: "How Healthy are you",
+                    imageUrl: "https://www.ethika.co.in/wp-content/uploads/2022/06/annual-health-checkup-1200x900.jpg",
+                  );
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GeneralHealthCheck(healthCheck: healthCheck),
+                    ),
+                  );
+                },
+              ),
+
               const SizedBox(height: 30),
 
               Text(

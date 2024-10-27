@@ -9,33 +9,57 @@ class MedicationProvider with ChangeNotifier {
   final FirebaseStorage storage = FirebaseStorage.instance;
   List<Medication> medications = [];
 
-  Future<void> fetchMedications(DateTime date) async {
+  Future<void> fetchMedications(DateTime date, {bool includeDaily = true}) async {
+    List<Medication> fetchedMedications = [];
+
+    // Query for medications on the specified date
     QuerySnapshot snapshot = await firestore
         .collection('medication_log')
         .where('date', isEqualTo: date)
         .get();
 
-    medications = snapshot.docs.map((doc) {
+    fetchedMedications.addAll(snapshot.docs.map((doc) {
       return Medication.fromMap(doc.data() as Map<String, dynamic>);
-    }).toList();
+    }).toList());
+
+    // If includeDaily is true, add medications with a daily frequency
+    if (includeDaily) {
+      QuerySnapshot dailySnapshot = await firestore
+          .collection('medication_log')
+          .where('frequency', isEqualTo: 'Daily')
+          .get();
+
+      fetchedMedications.addAll(dailySnapshot.docs.map((doc) {
+        return Medication.fromMap(doc.data() as Map<String, dynamic>);
+      }).toList());
+    }
+
+    medications = fetchedMedications;
     notifyListeners();
   }
 
-Future<void> addMedication(Medication medication, File? image) async {
-  DocumentReference docRef = firestore.collection('medication_log').doc();
-  String imageUrl = '';
+  Future<void> addMedication(Medication medication, File? image) async {
+    DocumentReference docRef = firestore.collection('medication_log').doc();
+    String imageUrl = '';
 
-  if (image != null) {
-    TaskSnapshot uploadTask = await storage
-        .ref('medications/${docRef.id}.jpg')
-        .putFile(image);
-    imageUrl = await uploadTask.ref.getDownloadURL();
+    if (image != null) {
+      TaskSnapshot uploadTask = await storage
+          .ref('medications/${docRef.id}.jpg')
+          .putFile(image);
+      imageUrl = await uploadTask.ref.getDownloadURL();
+    }
+
+    medication.imageUrl = imageUrl;
+    await docRef.set(medication.toMap());
+    medications.add(medication);
+    notifyListeners();
   }
 
-  medication.imageUrl = imageUrl;
-  await docRef.set(medication.toMap());
-  medications.add(medication);
-  notifyListeners();
-}
-
+  Future<String> uploadImage(File image) async {
+    final docRef = firestore.collection('medication_log').doc();
+    final storageRef = storage.ref('medications/${docRef.id}.jpg');
+    final uploadTask = await storageRef.putFile(image);
+    final imageUrl = await uploadTask.ref.getDownloadURL();
+    return imageUrl;
+  }
 }

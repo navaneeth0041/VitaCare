@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vitacare/ProfilePage.dart';
 import 'package:vitacare/aichat.dart';
 import 'package:vitacare/fitness_page.dart';
-import 'package:vitacare/medication_tracker_screen.dart';
+import 'package:vitacare/views/Medication/medication_tracker_screen.dart';
 import 'package:vitacare/reflection_page.dart';
 import 'components/category_card.dart';
 import 'components/custom_styles.dart';

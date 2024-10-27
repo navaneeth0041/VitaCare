@@ -6,7 +6,8 @@ class Medication {
   String frequency;
   DateTime date;
   String imageUrl;
-  List<String> reminders;
+  List<String> reminders; // Option 1: Store reminders as List of time strings
+  String type;
 
   Medication({
     required this.id,
@@ -14,7 +15,8 @@ class Medication {
     required this.frequency,
     required this.date,
     required this.imageUrl,
-    required this.reminders,
+    required this.reminders, // Use this for Option 1
+    required this.type,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +26,8 @@ class Medication {
       'frequency': frequency,
       'date': date,
       'imageUrl': imageUrl,
-      'reminders': reminders,
+      'reminders': reminders, // Store reminders as list of strings
+      'type': type,
     };
   }
 
@@ -35,7 +38,8 @@ class Medication {
       frequency: map['frequency'],
       date: (map['date'] as Timestamp).toDate(),
       imageUrl: map['imageUrl'],
-      reminders: List<String>.from(map['reminders']),
+      reminders: List<String>.from(map['reminders']), // Option 1
+      type: map['type'],
     );
   }
 }

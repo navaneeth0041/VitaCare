@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:vitacare/homepage.dart';
 import 'package:vitacare/providers/medication_provider.dart';
@@ -9,12 +10,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitacare/providers/vitaprovider.dart';
 import 'package:vitacare/utils/vitavoiceassistant.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   runApp(const ProviderScope(child: MyApp()));
 }
+
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

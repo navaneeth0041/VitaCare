@@ -29,18 +29,18 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
   }
 
   void _saveMedication() {
-    final newMedication = Medication(
-      id: DateTime.now().toString(),
-      name: _nameController.text,
-      frequency: _frequencyController.text,
-      date: widget.date,
-      imageUrl: '', // This will be updated after image upload
-      reminders: [],
-    );
+    // final newMedication = Medication(
+    //   id: DateTime.now().toString(),
+    //   name: _nameController.text,
+    //   frequency: _frequencyController.text,
+    //   date: widget.date,
+    //   imageUrl: '', // This will be updated after image upload
+    //   reminders: [],
+    // );
 
-    Provider.of<MedicationProvider>(context, listen: false)
-        .addMedication(newMedication, _selectedImage)
-        .then((_) => Navigator.of(context).pop());
+    // Provider.of<MedicationProvider>(context, listen: false)
+    //     .addMedication(newMedication, _selectedImage)
+    //     .then((_) => Navigator.of(context).pop());
   }
 
   @override
