@@ -13,25 +13,27 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF0F5FF), // Light bluish background
       appBar: AppBar(
-        title: const Text('Patient Profile'),
+        title: const Text('Patient Profile', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
         centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black87,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF5A6AF5)), // Bluish accent
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Column(
-
         children: [
           _buildProfileHeader(),
           _buildTabs(),
           Expanded(
-            child: _selectedTabIndex == 0 ? _buildViewDetails() : _buildReports(),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: _selectedTabIndex == 0 ? _buildViewDetails() : _buildReports(),
+            ),
           ),
         ],
       ),
@@ -42,15 +44,15 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
     return Column(
       children: [
         const CircleAvatar(
-          radius: 40,
-          backgroundImage: AssetImage('assets/profile_picture.png'), // Replace with your image asset
+          radius: 50,
+          backgroundImage: AssetImage('assets/profile_picture.png'),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         const Text(
           'Akanksha Deo',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF223365)),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -59,22 +61,22 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             _buildInfoBadge('AB+'),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
       ],
     );
   }
 
   Widget _buildInfoBadge(String text) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(15),
+        color: const Color(0xFFE1EBFF),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF5A6AF5)),
       ),
     );
   }
@@ -98,11 +100,11 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: isSelected ? Colors.red : Colors.transparent,
+              color: isSelected ? const Color(0xFF5A6AF5) : Colors.transparent,
               width: 2,
             ),
           ),
@@ -111,7 +113,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
           title,
           style: TextStyle(
             fontSize: 16,
-            color: isSelected ? Colors.red : Colors.black,
+            color: isSelected ? const Color(0xFF5A6AF5) : Colors.black87,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -121,7 +123,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   Widget _buildViewDetails() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(20.0),
       child: ListView(
         children: [
           _buildSectionTitle('Personal Information'),
@@ -137,11 +139,11 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
           _buildSectionTitle('Passed Appointments'),
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/doctor_profile.png'), // Replace with your doctor image asset
+              backgroundImage: AssetImage('assets/doctor_profile.png'),
             ),
-            title: const Text('Dr. Inara Isani'),
+            title: const Text('Dr. Inara Isani', style: TextStyle(fontWeight: FontWeight.w600)),
             subtitle: const Text('Heart Surgeon, Delhi'),
-            trailing: const Text('02:00 PM'),
+            trailing: const Text('02:00 PM', style: TextStyle(color: Color(0xFF5A6AF5))),
           ),
           const Align(
             alignment: Alignment.centerRight,
@@ -157,7 +159,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   Widget _buildReports() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(20.0),
       child: ListView(
         children: [
           _buildSectionTitle('Doctor Prescriptions'),
@@ -188,27 +190,27 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF223365)),
       ),
     );
   }
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
           ),
           Text(
             value,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF223365)),
           ),
         ],
       ),
@@ -217,16 +219,20 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   Widget _buildReportItem(String title, String date) {
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: ListTile(
-        leading: const Icon(Icons.description, color: Colors.blue),
-        title: Text(title),
-        subtitle: Text(date),
+        leading: const Icon(Icons.description, color: Color(0xFF5A6AF5)),
+        title: Text(title, style: const TextStyle(color: Color(0xFF223365), fontWeight: FontWeight.w600)),
+        subtitle: Text(date, style: const TextStyle(color: Colors.black54)),
         trailing: TextButton(
           onPressed: () {}, // Add upload functionality here
           child: const Text(
             'Upload Report',
-            style: TextStyle(color: Colors.red),
+            style: TextStyle(color: Color(0xFF5A6AF5)),
           ),
         ),
       ),
